@@ -58,29 +58,36 @@ if __name__ == "__main__":
     # find all page images with keyword
     for i in range(len(fruits)):
         genre = fruits[i]
-        folder_name = genre.replace(" ", "_")
-        parameter = {"query": genre, "per_page": per_page, "page": page}
-        query = urllib.parse.urlencode(parameter)
-        url = f"https://unsplash.com/napi/search/photos?{query}"
-        response = call_request(url)
-        for j in range(1, 10):
+        # parameter = {"query": genre, "per_page": per_page, "page": page}
+        # query = urllib.parse.urlencode(parameter)
+        # url = f"https://unsplash.com/napi/search/photos?{query}"
+        # response = call_request(url)
+        for j in range(1, 11):
             parameter = {"query": genre, "per_page": per_page, "page": j}
             query = urllib.parse.urlencode(parameter)
             url = f"https://unsplash.com/napi/search/photos?{query}"
-            response = call_request(url)
-            response_list.append(response)
+            response_ = call_request(url)
+            response_list.append(response_)
+            print(url)
 
-        for m in range(len(response_list)):
+    res_len = len(response_list)
+    fruits_len = len(fruits)
+    range_list = res_len / fruits_len
+    for i in range(len(fruits)):
+        genre = fruits[i]
+        for m in range(round(range_list)):
             rs = m * 30
-            if len(response["results"]) > 0:
-                for n in range(len(response["results"])):
+            if len(response_list[m]["results"]) > 0:
+                for n in range(len(response_list[m]["results"])):
                     index = n + 1
+                    print(response_list[n]["results"][n]["id"])
                     filename = f"{genre}_{index + rs}.jpg"
-                    folder_path = os.path.join(image_folder_path, folder_name)
+                    folder_path = os.path.join(image_folder_path, genre)
                     if not os.path.isdir(folder_path):
                         os.mkdir(folder_path)
                     filepath = os.path.join(folder_path, filename)
                     r = requests.get(
-                        response["results"][n]["urls"]["raw"], allow_redirects=True
+                        response_list[n]["results"][n]["urls"]["raw"],
+                        allow_redirects=True,
                     )
                     open(filepath.replace("\\", "/"), "wb").write(r.content)
