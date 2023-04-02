@@ -28,66 +28,39 @@ def start_crawl(fruit):
         os.mkdir(log_path)
     fruit_log = logging.getLogger(fruit)
     fruit_log.setLevel(logging.INFO)
-    fruit_log.addHandler(logging.FileHandler(f"{log_path}\{fruit}.log", "w"))
-    path = r"C:\Users\admin\Desktop"
+    fruit_log.addHandler(logging.FileHandler(f"{log_path}\{fruit}.log", "a+"))
+    path = r"C:\Users\admin\OneDrive - Thuyloi University"
     image_folder_path = path + "\Images"
     response_list = []
     per_page = 30
     if not os.path.isdir(image_folder_path):
         os.mkdir(image_folder_path)
 
-    # find all page images with keyword
-    # for i in range(len(fruit)):
-    #     genre = fruit[i]
-    # parameter = {"query": genre, "per_page": per_page, "page": page}
-    # query = urllib.parse.urlencode(parameter)
-    # url = f"https://unsplash.com/napi/search/photos?{query}"
-    # response = call_request(url)
-    for j in range(1, 11):
+    for j in range(1, 3):
         parameter = {"query": fruit, "per_page": per_page, "page": j}
         query = urllib.parse.urlencode(parameter)
-        url = f"https://unsplash.com/napi/search/photos?{query}"
+        # url = f"https://unsplash.com/napi/search/photos?{query}"
+        url = f"https://pixabay.com/api/?key=34881807-c7347ca212ee6cd6f13a3806a&q={fruit}&image_type=photo&pretty=true&page={j}&per_page=200"
         response_ = call_request(url)
         response_list.append(response_)
+
     for m in range(len(response_list)):
         rs = m * 30
-        for i in range(len(response_list[m]["results"])):
-            filename = f"{fruit}_{i + rs}.jpg"
+        for i in range(len(response_list[m]["hits"])):
+            filename = f"{fruit}_{299 + i + rs}.jpg"
             print(f"Downloading {filename}...")
-            print(f"ID: {response_list[m]['results'][i]['id']}")
-            fruit_log.info(f"ID: {response_list[m]['results'][i]['id']}")
+            print(f"ID: {response_list[m]['hits'][i]['id']}")
+            fruit_log.info(f"{m}: {response_list[m]['hits'][i]['id']}")
             folder_path = os.path.join(image_folder_path, fruit)
             if not os.path.isdir(folder_path):
                 os.mkdir(folder_path)
             filepath = os.path.join(folder_path, filename)
             r = requests.get(
-                response_list[m]["results"][i]["urls"]["raw"], allow_redirects=True
+                response_list[m]["hits"][i]["previewURL"], allow_redirects=True
             )
             open(filepath.replace("\\", "/"), "wb").write(r.content)
 
-
-if __name__ == "__main__":
-    fruits = [
-        "apple",
-        "banana",
-        "orange",
-        "kiwi",
-        "strawberry",
-        "blueberry",
-        "mango",
-        "pineapple",
-        "watermelon",
-        "grape",
-        "pear",
-        "peach",
-        "mango",
-        "cherry",
-        "lemon",
-        "lime",
-        "grapefruit",
-        "avocado",
-        "melon",
-    ]
+    print(f"Downloaded {fruit} images successfully!")
     # per_page = 30
     # page = 1
     # path = r"C:\Users\admin\Desktop"
