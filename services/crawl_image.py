@@ -36,27 +36,27 @@ def start_crawl(fruit):
     if not os.path.isdir(image_folder_path):
         os.mkdir(image_folder_path)
 
-    for j in range(1, 3):
+    for j in range(1, 15):
         parameter = {"query": fruit, "per_page": per_page, "page": j}
         query = urllib.parse.urlencode(parameter)
-        # url = f"https://unsplash.com/napi/search/photos?{query}"
-        url = f"https://pixabay.com/api/?key=34881807-c7347ca212ee6cd6f13a3806a&q={fruit}&image_type=photo&pretty=true&page={j}&per_page=200"
+        url = f"https://unsplash.com/napi/search/photos?{query}"
+        # url = f"https://pixabay.com/api/?key=34881807-c7347ca212ee6cd6f13a3806a&q={fruit}&image_type=photo&pretty=true&page={j}&per_page=200"
         response_ = call_request(url)
         response_list.append(response_)
 
     for m in range(len(response_list)):
         rs = m * 30
-        for i in range(len(response_list[m]["hits"])):
-            filename = f"{fruit}_{299 + i + rs}.jpg"
+        for i in range(len(response_list[m]["results"])):
+            filename = f"{fruit}_{90 + i + rs}.jpg"
             print(f"Downloading {filename}...")
-            print(f"ID: {response_list[m]['hits'][i]['id']}")
-            fruit_log.info(f"{m}: {response_list[m]['hits'][i]['id']}")
+            print(f"ID: {response_list[m]['results'][i]['id']}")
+            fruit_log.info(f"{m}: {response_list[m]['results'][i]['id']}")
             folder_path = os.path.join(image_folder_path, fruit)
             if not os.path.isdir(folder_path):
                 os.mkdir(folder_path)
             filepath = os.path.join(folder_path, filename)
             r = requests.get(
-                response_list[m]["hits"][i]["previewURL"], allow_redirects=True
+                response_list[m]["results"][i]["urls"]["raw"], allow_redirects=True
             )
             open(filepath.replace("\\", "/"), "wb").write(r.content)
 
