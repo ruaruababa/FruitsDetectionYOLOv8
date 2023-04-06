@@ -8,28 +8,16 @@ lock = threading.Lock()
 
 if __name__ == "__main__":
     fruits = [
-        # "dragon fruit",
-        # "papaya",
-        # "durian",
-        "carrot",
-        # "apple",
-        # "banana",
-        # "orange",
-        # "kiwi",
-        # "strawberry",
-        # "blueberry",
-        # "mango",
-        # "pineapple",
-        # "watermelon",
-        # "grape",
-        # "pear",
-        # "peach",
-        # "mango",
-        # "cherry",
-        # "lemon",
-        # "lime",
-        # "avocado",
-        # "melon",
+        "dragon fruit",
+        "papaya",
+        "durian",
+        "apple",
+        "banana",
+        "orange",
+        "pineapple",
+        "watermelon",
+        "mango",
+        "avocado",
     ]
     my_threads = []
     for i in range(len(fruits)):

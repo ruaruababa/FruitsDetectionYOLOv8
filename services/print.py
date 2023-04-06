@@ -11,7 +11,6 @@ close_folder.setLevel(logging.INFO)
 close_folder.addHandler(logging.FileHandler("close_folder.bat", "w"))
 fruits = [
     "apple",
-    "banana",
     "orange",
     "kiwi",
     "strawberry",
@@ -30,6 +29,7 @@ fruits = [
     "avocado",
     "melon",
 ]
+fruits = fruits.sort()
 path = r"C:\Users\admin\Desktop\Images"
 logging.info(f"@echo off")
 for i in range(len(fruits)):
