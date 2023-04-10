@@ -14,27 +14,27 @@ def moveFile(currentPath, newPath):
             print(f"Moving apple_{i}.txt")
 
 
-def rewrite_class(path_):
+def rewrite_class(path_, new_class):
     for i in range(0, 1000):
-        hasFile = os.path.isfile(r"path_\apple_" + str(i) + ".txt")
+        hasFile = os.path.isfile(f"{path_}" + str(i) + ".txt")
         if hasFile:
             file_ = open(
-                r"path_\apple_" + str(i) + ".txt",
+                f"{path_}" + str(i) + ".txt",
                 "r",
             )
             labels_ = file_.read().splitlines()
             for label in labels_:
                 lb = label.split(" ")
-                lb = [float(val) if val != "15" else 0 for val in lb]
+                lb = [float(val) if val != f"{lb[0]}" else new_class for val in lb]
                 my_list = [str(lb[i]) for i in range(len(lb))]
                 my_list = " ".join(my_list)
                 rf = open(
-                    r"path_\apple_" + str(i) + ".txt",
+                    f"{path_}" + str(i) + ".txt",
                     "a",
                 )
                 rf.truncate(0)
                 wf = open(
-                    r"path_\apple_" + str(i) + ".txt",
+                    f"{path_}" + str(i) + ".txt",
                     "a",
                 )
                 wf.write(my_list + "\n")
@@ -52,3 +52,12 @@ def remove_img_no_labels(path_):
         elif not hasImg and hasLabel:
             os.remove(r"path_\apple_" + str(i) + ".txt")
             print(f"Removing apple_{i}.txt")
+
+
+def main():
+    path_ = r"C:\Users\admin\OneDrive - Thuyloi University\Images\papaya\papaya_"
+    rewrite_class(path_, 5)
+
+
+if __name__ == "__main__":
+    main()
