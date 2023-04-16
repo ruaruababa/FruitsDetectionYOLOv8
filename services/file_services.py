@@ -55,8 +55,10 @@ def remove_img_no_labels(path_):
 
 
 def main():
-    path_ = r"C:\Users\admin\OneDrive - Thuyloi University\Images\papaya\papaya_"
-    rewrite_class(path_, 5)
+    path_ = (
+        r"C:\Users\admin\OneDrive - Thuyloi University\Images\watermelon\watermelon_"
+    )
+    rewrite_class(path_, 3)
 
 
 if __name__ == "__main__":

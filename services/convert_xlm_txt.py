@@ -31,7 +31,7 @@ def convert_coordinates(size, box):
 
 def convert_xml2yolo(lut):
     for fname in glob.glob(
-        r"C:\Users\admin\OneDrive - Thuyloi University\Images\papaya\*.xml"
+        r"C:\Users\admin\OneDrive - Thuyloi University\Images\watermelon\*.xml"
     ):
         if os.path.isfile(fname):
             os.remove(fname)
