@@ -6,7 +6,7 @@ from PySide6.QtCore import QDir, QFile, QThread, Signal
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QApplication, QFileDialog, QWidget
-
+from predict import detectFruits
 
 def convertCVImage2QtImage(cv_img):
     cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
@@ -23,9 +23,9 @@ class ProcessImage(QThread):
         QThread.__init__(self)
         self.fileName = fileName
 
-        from detector import Detector
+        from predict import detectFruits
 
-        self.detector = Detector()
+        self.detector = detectFruits()
 
     def run(self):
         self.video = cv2.VideoCapture(self.fileName)
@@ -84,15 +84,17 @@ class MainWindow(QWidget):
         self.fileName = QFileDialog.getOpenFileName(
             self, "Single File", "C:'", "*.jpg *.mp4 *.jpeg *.png *.avi"
         )[0]
+        print(self.fileName)
         self.ui.txt_address.setText(str(self.fileName))
         self.show = show(self.fileName)
         self.show.signal_show_image.connect(self.show_input)
         self.show.start()
 
     def predict(self):
-        self.process_image = ProcessImage(self.fileName)
-        self.process_image.signal_show_frame.connect(self.show_output)
-        self.process_image.start()
+        detectFruits(self.fileName)
+        # self.process_image = ProcessImage(self.fileName)
+        # self.process_image.signal_show_frame.connect(self.show_output)
+        # self.process_image.start()
 
     def show_input(self, image):
         pixmap = convertCVImage2QtImage(image)
