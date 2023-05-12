@@ -14,8 +14,21 @@ model.overrides = {
 
 
 def detectFruits(fileName):
-    model.predict(
+    results = model.predict(
         source=f"{fileName}",
         save=True,
         conf=0.4,
+        show=True,
     )
+
+    for r in results:
+        print("r.boxes.cls", r.boxes.cls)
+        print("r.boxes.conf", r.boxes)
+        print("r.boxes.xyxy", r.boxes.data)
+        for c in r.boxes.cls:
+            if c:
+                print("class", c)
+                print("Class", int(c))
+                print("Class", model.names[int(c)])
+            else:
+                print("no class")
