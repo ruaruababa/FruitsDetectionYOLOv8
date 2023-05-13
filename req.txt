@@ -1,0 +1,11 @@
+Chương 1: Giới thiệu học máy
+Chuowng2: trình bày YOLO v8
+Chương3
+Độ đo mPA(B)
+Mô tả training tập test
+Mô tả quá trình train ( add thêm ảnh demo )
+- kết quả của mỗi lần training
+- độ chính xác với tệp train và test
+- Giao diện của ứng dụng
+
+Tổng trang khoảng 40 trang
